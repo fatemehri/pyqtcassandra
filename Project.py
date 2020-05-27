@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QTableWidget, QTableWidgetIte
 from demo import Ui_Dialog
 from cassandra.cluster import Cluster
 
+
 class RunDesignerGUI():
     def __init__(self):
         # Create body Dialog
@@ -40,9 +41,9 @@ class RunDesignerGUI():
         # Cassandra connection
         cluster = Cluster()
         session = cluster.connect('test')
-        query = "select * from test.staticfeatures where mmsi={0} and date='{1}' allow filtering".format(
-            self.mmsi, self.fDate)
-        e = session.execute(query)
+        query = "select * from test.staticfeatures where mmsi={0} and date='{1}' allow filtering"\
+            .format(self.mmsi, self.fDate)
+        results = session.execute(query)
 
         # Create Table
         self.table = QTableWidget()
@@ -56,13 +57,14 @@ class RunDesignerGUI():
                                               'vesseltypemain'])
         # Add rows
         row = 0
-        for items in e:
-            self.table.setRowCount(crow+(row + 1))
+        for items in results:
+            self.table.setRowCount(crow + (row + 1))
             for i in range(0, 19):
                 self.table.setItem(row, i, QTableWidgetItem(str(items[i])))
             row += 1
 
         self.table.show()
-        
+
+
 if __name__ == "__main__":
     RunDesignerGUI()
