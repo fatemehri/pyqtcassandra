@@ -65,8 +65,8 @@ class RunDesignerGUI():
         start_time = datetime.now()
         # Cassandra connection
         self.mmsi = self.ui.lineEdit.text()
-        cluster = Cluster(['10.10.110.50'])
-        session = cluster.connect('coastal')
+        cluster = Cluster(['...'])
+        session = cluster.connect('')
         try:
             query = "select * from coastal.cais where mmsi={0} and date>='{1}' and date<='{2}' allow filtering" \
                 .format(self.mmsi, self.prev_date, self.curr_date)
